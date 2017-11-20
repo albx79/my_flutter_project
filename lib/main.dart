@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import './dice.dart';
 
 void main() {
   runApp(new MyApp());
@@ -31,13 +32,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Dice {
-  int qty;
-  int sides;
-}
-
 enum GameEntity {
-  character, ship, system
+  character,
+  ship,
+  system
 }
 
 class NameScreen extends StatefulWidget {
@@ -49,7 +47,9 @@ class NameState extends State<NameScreen> {
   String latestName = '...';
 
   void _generateName(GameEntity entity) {
-    setState(() {latestName = 'New ' + entity.toString() + ' name'; });
+    setState(() {
+      latestName = 'New ' + entity.toString() + ' name';
+    });
   }
 
   @override
@@ -58,7 +58,9 @@ class NameState extends State<NameScreen> {
       children: [
         new ButtonBar(
           children: [
-            new MaterialButton(onPressed: (){_generateName(GameEntity.character);}, child: new Text("Character"),),
+            new MaterialButton(onPressed: () {
+              _generateName(GameEntity.character);
+            }, child: new Text("Character"),),
           ],
         ),
         new Text(latestName)
@@ -76,15 +78,28 @@ class RollState extends State<RollScreen> {
   String latestRoll = '...';
 
   void _roll(List<Dice> diceSet) {
-      latestRoll = '' + diceSet.toString() + ' rolled';
+    setState(() { latestRoll = '' + diceSet.toString() + ' rolled, got ' + roll(diceSet).toString(); });
   }
 
   @override
   Widget build(BuildContext context) {
     return new Column(
       children: [
-        new Text("Roll area")
+        new ButtonBar(
+          children: <Widget>[
+            _createRollButton(n2D6),
+            _createRollButton(n4DF),
+            _createRollButton(n1D20),
+          ],
+        ),
+        new Text(latestRoll)
       ],
     );
   }
+
+  MaterialButton _createRollButton(Dice dice) =>
+      new MaterialButton(
+        onPressed: () { _roll([dice]); },
+        child: new Text("Roll " + dice.toString())
+      );
 }

@@ -17,11 +17,7 @@ class Dice {
   String toString() => (qty != 1 ? qty.toString() : "") + name;
 
   List<int> _roll(Random rand) {
-    var results = new List<int>(qty);
-    for (int i = 0; i < qty; i++) {
-      results.add(rand.nextInt(sides) + 1 + offset);
-    }
-    return results;
+    return new List<int>.generate(qty, (index) => rand.nextInt(sides) + 1 + offset);
   }
 }
 
@@ -32,5 +28,5 @@ var n1D20 = new Dice(sides: 20);
 var _random = new Random();
 
 List<int> roll(List<Dice> diceSet) {
-  return diceSet.expand((d) => d._roll(_random)).toList(growable: false);
+  return diceSet.expand((d) => d._roll(_random)).toList(growable: true);
 }

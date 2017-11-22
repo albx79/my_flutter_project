@@ -37,7 +37,7 @@ void main() {
   group("A list of dice", () {
     test("Can be rolled", () {
       var outcome = roll([new Dice(qty: 3, sides: 7), new Dice(qty: 9, sides: 19)]);
-      expect(outcome, hasLength(2));
+      expect(outcome, hasLength(3 + 9));
     });
   });
 

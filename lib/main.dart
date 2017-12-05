@@ -116,7 +116,7 @@ Widget _createFatButton(void onPressed(), String text) => new RaisedButton(
 
 Widget _createScreen({String title, List<Widget> buttons, List<Widget> results}) =>  new Column(
   children: [
-    new Text("Dice Roller",
+    new Text(title,
         style: MyStyles.sectionHeader
     ),
     new Row(
